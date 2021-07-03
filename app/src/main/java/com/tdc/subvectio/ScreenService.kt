@@ -12,7 +12,7 @@ import android.widget.TextView
 
 class ScreenService : AccessibilityService()  {
     var overlayDelivery: View? = null
-    var tvMerchantName: TextView? = null
+    var tvStoreName: TextView? = null
     var tvOfferAmount: TextView? = null
     var tvDollarsPerMile: TextView? = null
     var tvTotalMiles: TextView? = null
@@ -42,7 +42,7 @@ class ScreenService : AccessibilityService()  {
 
         overlayDelivery = inflater.inflate(R.layout.overlay_delivery, frame)
 
-        tvMerchantName = overlayDelivery?.findViewById(R.id.merchantName)
+        tvStoreName = overlayDelivery?.findViewById(R.id.storeName)
         tvOfferAmount = overlayDelivery?.findViewById(R.id.offerAmount)
         tvDollarsPerMile = overlayDelivery?.findViewById(R.id.dollarPerMile)
         tvTotalMiles = overlayDelivery?.findViewById(R.id.totalMiles)

@@ -31,34 +31,41 @@ class NotificationService : NotificationListenerService() {
         val notificationExtras = sbn.notification?.extras
         val notificationHash = md5("${notificationExtras?.getString("android.text")}${notificationExtras?.getString("android.bigText")}")
 
-        if (notificationHash != lastNotificationHash) {
-            lastNotificationHash = notificationHash
+        try {
+            if (notificationHash != lastNotificationHash) {
+                lastNotificationHash = notificationHash
 
-            when (notificationExtras?.getString("android.title")) {
-                "New Delivery!" -> "new"
-                "Missed Delivery" -> "miss"
-                "Delivery Update" -> "update"
-                else -> return
+                when (notificationExtras?.getString("android.title")) {
+                    "New Delivery!" -> "new"
+                    else -> return
+                }
+
+                Logger.log("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+                Logger.log("---TITLE----- ${notificationExtras.getString("android.title")}")
+                Logger.log("---TEXT------ ${notificationExtras.getString("android.text")}")
+                Logger.log("---BEGIN BIGTEXT---\n${notificationExtras.getString("android.bigText")}")
+                Logger.log("---END BIGTEXT---")
+
+
+                val bigtext = notificationExtras.getString("android.bigText")
+                val storeName = notificationExtras.getString("android.text")?.substring(17)
+                val addressData = bigtext?.split("\n")?.toTypedArray()
+                // todo: need to do better checking before parsing - dude
+                val distances = Regex("approx (.*?) mi").findAll(bigtext!!).map { it.groupValues[1].toDouble() }.toList()
+
+                if (addressData!!.count() > 5) {
+                    val deliveryIntent = Intent()
+                    deliveryIntent.putExtra("sourcePackageName", sbn.packageName)
+                    deliveryIntent.putExtra("storeName", storeName)
+                    deliveryIntent.putExtra("storeAddress", addressData[3])
+                    deliveryIntent.putExtra("customerAddress", addressData[5])
+                    deliveryIntent.putExtra("distance", distances[0] + distances[1])
+                    deliveryIntent.action = "com.tdc.subvectio.NEW_DELIVERY"
+                    sendBroadcast(deliveryIntent)
+                }
             }
-
-            println("****************************************")
-            println("---TITLE-------\r\n ${notificationExtras.getString("android.title")}")
-            println("---TEXT--------\r\n ${notificationExtras.getString("android.text")}")
-            println("--BIGTEXT-----\r\n ${notificationExtras.getString("android.bigText")}")
-            println("****************************************")
-
-            val merchantName = notificationExtras.getString("android.text")?.substring(17)
-            val addressData = notificationExtras.getString("android.bigText")?.split("\n")?.toTypedArray()
-
-            if (addressData!!.count() > 5) {
-                val deliveryIntent = Intent()
-                deliveryIntent.putExtra("sourcePackageName", sbn.packageName)
-                deliveryIntent.putExtra("merchantName", merchantName)
-                deliveryIntent.putExtra("merchantAddress", addressData[3])
-                deliveryIntent.putExtra("customerAddress", addressData[5])
-                deliveryIntent.action = "com.tdc.subvectio.NEW_DELIVERY"
-                sendBroadcast(deliveryIntent)
-            }
+        } catch (ex: Exception) {
+            Logger.log(ex.stackTraceToString(), true)
         }
     }
 
