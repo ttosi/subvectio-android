@@ -13,4 +13,12 @@
         android:text="use live traffic?"
         tools:layout_editor_absoluteX="158dp"
         tools:layout_editor_absoluteY="225dp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="196dp"
+        tools:layout_editor_absoluteY="421dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

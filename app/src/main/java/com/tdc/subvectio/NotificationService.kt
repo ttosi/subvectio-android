@@ -50,8 +50,6 @@ class NotificationService : NotificationListenerService() {
                 val bigtext = notificationExtras.getString("android.bigText")
                 val storeName = notificationExtras.getString("android.text")?.substring(17)
                 val addressData = bigtext?.split("\n")?.toTypedArray()
-                // todo: need to do better checking before parsing - dude
-                val distances = Regex("approx (.*?) mi").findAll(bigtext!!).map { it.groupValues[1].toDouble() }.toList()
 
                 if (addressData!!.count() > 5) {
                     val deliveryIntent = Intent()
@@ -59,7 +57,6 @@ class NotificationService : NotificationListenerService() {
                     deliveryIntent.putExtra("storeName", storeName)
                     deliveryIntent.putExtra("storeAddress", addressData[3])
                     deliveryIntent.putExtra("customerAddress", addressData[5])
-                    deliveryIntent.putExtra("distance", distances[0] + distances[1])
                     deliveryIntent.action = "com.tdc.subvectio.NEW_DELIVERY"
                     sendBroadcast(deliveryIntent)
                 }

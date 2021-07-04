@@ -1,12 +1,12 @@
 package com.tdc.subvectio
 
-//import kotlin.reflect.full.memberProperties
 import android.accessibilityservice.AccessibilityService
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -21,6 +21,11 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.tdc.subvectio.data.DeliveryDao
+import com.tdc.subvectio.data.SubvectioDatabase
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import okhttp3.*
@@ -47,15 +52,19 @@ class DeliveryService : AccessibilityService() {
     private val baseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial"
     private val optionsUrl = "&key=AIzaSyDGy4Y9IHHyVf3ABO2KnpLsDgeRm_uDRfc&traffic_model=best_guess&departure_time=now"
 
-//    companion object {
-//        var d = Delivery()
-//        var s = Shift()
-//    }
+    private lateinit var db: SubvectioDatabase
+    private lateinit var deliveryDao: DeliveryDao
+    private lateinit var delivery: com.tdc.subvectio.entities.Delivery
 
-    lateinit var d: Delivery
+    private var isDebug: Boolean = false
+
     var s: Shift = Shift()
 
+    @DelicateCoroutinesApi
     override fun onServiceConnected() {
+        db = SubvectioDatabase.getDatabase(this)
+        deliveryDao = db.deliveryDao()
+
         initOverlay()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -68,6 +77,7 @@ class DeliveryService : AccessibilityService() {
 
     override fun onInterrupt() {}
 
+    @DelicateCoroutinesApi
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
         if (event.source == null) return
@@ -80,38 +90,16 @@ class DeliveryService : AccessibilityService() {
                     }
                 }
                 AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-//
-//                    Logger.log(">>> TYPE_WINDOW_CONTENT_CHANGED >>> * <<<")
-//                    Logger.log(">>> ${getScreenText(event.source)}")
-
-//                    Logger.log(">>> TYPE_WINDOW_CONTENT_CHANGED (ScreenType) >>> ${Screen.type(getScreenText(event.source)).name} <<<")
-
                     when(Screen.type(getScreenText(event.source))) {
                         ScreenType.OFFER_SCREEN -> {
                             offerScreenText = getScreenText(event.source)
                         }
                         ScreenType.ARE_YOU_SURE_DECLINE_SCREEN -> overlayDelivery?.visibility = View.GONE
                         ScreenType.DECLINED_SCREEN -> {
-                            Logger.log(">>> DECLINED")
-                            s.numDeclined++
-                            d.completedAt = LocalDateTime.now()
-                            d.wasDeclined = true
-                            Logger.data(d)
+                            delcineDelivery()
                         }
                         ScreenType.DELIVERY_COMPLETE -> {
-                            // todo: need to handle when peak pay is in effect
-
-                            val payouts = getScreenText(event.source)
-                            d.basePay = payouts[3].replace("$", "").toDouble()
-                            d.tip = payouts[6].replace("$", "").toDouble()
-                            d.actual = payouts[8].replace("$", "").toDouble()
-
-                            Logger.log("BASE PAY          >>> $${d.basePay}")
-                            Logger.log("TIP               >>> $${d.tip}")
-                            Logger.log("ACTUAL PAY        >>> $${d.actual}")
-                            Logger.log(">>> COMPLETE  ")
-
-                            Logger.data(d)
+                            completeDelivery(getScreenText(event.source))
                         }
                     }
                 }
@@ -131,27 +119,35 @@ class DeliveryService : AccessibilityService() {
                             s.startAt = LocalDateTime.now()
                         }
                         "accept" -> {
-                            d.acceptedAt = LocalDateTime.now()
-                            d.isActive = true
+                            delivery.acceptedAt = LocalDateTime.now()
                             s.numAccepted++
+
+                            GlobalScope.launch { deliveryDao.update(delivery) }
+
                             Logger.log(">>> ACCEPTED")
                         }
                         "arrived at store" -> {
-                            d.arrivedStoreAt = LocalDateTime.now()
-                            Logger.log("DRIVE TO STORE    >>> ${getMinutes(d.acceptedAt, d.arrivedStoreAt)} mins")
+                            delivery.arrivedStoreAt = LocalDateTime.now()
+                            delivery.toStoreMins = getMinutes(delivery.acceptedAt, delivery.arrivedStoreAt)
+
+                            GlobalScope.launch { deliveryDao.update(delivery) }
+
+                            Logger.log("DRIVE TO STORE    >>> ${delivery.toStoreMins} mins")
                         }
                         "confirm pickup" -> {
-                            d.departedStoreAt = LocalDateTime.now()
-                            Logger.log("WAIT AT STORE     >>> ${ getMinutes(d.arrivedStoreAt, d.departedStoreAt)} mins")
-                        }
-                        "complete delivery", "confirm to complete delivery" -> {
-                            d.completedAt = LocalDateTime.now()
-                            d.isActive = false
-                            Logger.log("DRIVE TO CUSTOMER >>> ${getMinutes(d.departedStoreAt, d.completedAt)} mins")
-                            Logger.log(
-                                "DELIVERY TIME     >>> ${getMinutes(d.acceptedAt, d.completedAt)} mins")
+                            delivery.departedStoreAt = LocalDateTime.now()
+                            delivery.atStoreMins = getMinutes(delivery.arrivedStoreAt, delivery.departedStoreAt)
 
-                            Logger.data(d)
+                            GlobalScope.launch { deliveryDao.update(delivery) }
+
+                            Logger.log("WAIT AT STORE     >>> ${delivery.atStoreMins} mins")
+                        }
+                        // todo: FOR DEBUG ONLY
+                        "complete delivery" -> {
+                            if(isDebug) {
+                                val payouts = mutableListOf("Delivery Complete!", "Pay", "Base pay", "$9.50", "Tip", "Customer tip", "$5.00", "Total", "$14.50", "Got it")
+                                completeDelivery(payouts)
+                            }
                         }
                         "pause dash", "pause orders" -> Logger.log(">>> PAUSED")
                         "resume dash" -> Logger.log(">>> RESUMED")
@@ -159,14 +155,7 @@ class DeliveryService : AccessibilityService() {
                             s.endAt = LocalDateTime.now()
 
                             Logger.log("--------------------- SHIFT SUMMARY ---------------------")
-                            Logger.log(
-                                "SHIFT LENGTH      >>> ${
-                                    getMinutes(
-                                        s.startAt,
-                                        s.endAt
-                                    ) / 60
-                                } hours"
-                            )
+                            Logger.log("SHIFT LENGTH      >>> ${getMinutes(s.startAt, s.endAt) / 60} hours")
                             Logger.log("OFFERS            >>> ${s.numOffers}")
                             Logger.log("ACCEPTED          >>> ${s.numAccepted}")
                             Logger.log("DECLINED          >>> ${s.numDeclined}")
@@ -179,11 +168,9 @@ class DeliveryService : AccessibilityService() {
                         }
                         // todo: FOR DEBUG ONLY
                         "decline" -> {
-                            Logger.log(">>> DECLINED..")
-                            s.numDeclined++
-                            d.completedAt = LocalDateTime.now()
-                            d.wasDeclined = true
-                            Logger.data(d)
+                            if(isDebug) {
+                                delcineDelivery()
+                            }
                         }
                     }
                 }
@@ -194,31 +181,81 @@ class DeliveryService : AccessibilityService() {
         }
     }
 
+    @DelicateCoroutinesApi
+    private fun completeDelivery(payouts: MutableList<String>) {
+        // todo: need to handle when peak pay is in effect
+
+        delivery.completedAt = LocalDateTime.now()
+        delivery.toDeliverMins = getMinutes(delivery.departedStoreAt, delivery.completedAt)
+        delivery.basePay = payouts[3].replace("$", "").toDouble()
+        delivery.tip = payouts[6].replace("$", "").toDouble()
+        delivery.actualPay = payouts[8].replace("$", "").toDouble()
+        delivery.actualDuration = getMinutes(delivery.acceptedAt, delivery.completedAt)
+        delivery.actualDeliveryIndex = 60.0 / delivery.actualDuration * delivery.actualPay
+
+        GlobalScope.launch { deliveryDao.update(delivery) }
+
+        Logger.log("DRIVE TO CUSTOMER >>> ${delivery.toDeliverMins} mins")
+        Logger.log("ACTUAL DURATION   >>> ${delivery.actualDuration} mins")
+        Logger.log("BASE PAY          >>> \$%.2f".format(delivery.basePay))
+        Logger.log("TIP               >>> \$%.2f".format(delivery.tip))
+        Logger.log("ACTUAL PAY        >>> \$%.2f".format(delivery.actualPay))
+        Logger.log("ACTUAL INDEX      >>> ${delivery.actualDeliveryIndex}")
+
+        Logger.log(">>> COMPLETE  ")
+    }
+
+    @DelicateCoroutinesApi
+    private fun delcineDelivery() {
+        delivery.isDeclined = true
+        delivery.completedAt = LocalDateTime.now()
+        s.numDeclined++
+
+        GlobalScope.launch { deliveryDao.update(delivery) }
+
+        Logger.log(">>> DECLINED  ")
+    }
+
+    @DelicateCoroutinesApi
     private val deliveryNotification = object : BroadcastReceiver() {
         override fun onReceive(contxt: Context?, intent: Intent?) {
             if (intent == null) return
             if (intent.extras == null) return
 
             try {
+                val sourcePackageName = intent.extras?.getString("sourcePackageName")
+
+                isDebug = when(sourcePackageName) {
+                    "com.tdc.subvectio_dummy" -> true
+                    else -> false
+                }
+
                 // bring dash app to front
+                // todo: check to see if app is already focused
                 val packageManager = applicationContext.packageManager
-                val launchIntent = packageManager.getLaunchIntentForPackage(intent.extras?.getString("sourcePackageName")!!)
+                val launchIntent = packageManager.getLaunchIntentForPackage(sourcePackageName!!)
                 launchIntent?.addCategory(Intent.CATEGORY_LAUNCHER)
                 applicationContext.startActivity(launchIntent)
 
                 Thread.sleep(1000)
 
-                d = Delivery()
+                delivery = com.tdc.subvectio.entities.Delivery(
+                    storeName = intent.extras?.getString("storeName")!!,
+                    storeAddress = intent.extras?.getString("storeAddress")!!,
+                    customerAddress = intent.extras?.getString("customerAddress")!!,
+                    offer = offerScreenText.firstOrNull { it.startsWith("$") }?.replace("$", "")?.toDouble()!!,
+                    createdAt = LocalDateTime.now(),
+                    isDebug = isDebug
+                )
 
-                d.offer = offerScreenText.firstOrNull { it.startsWith("$") }?.replace("$", "")?.toDouble()
-                d.storeName = intent.extras?.getString("storeName")
-                d.storeAddress = intent.extras?.getString("storeAddress")
-                d.customerAddress = intent.extras?.getString("customerAddress")
-                d.distance = intent.extras?.getDouble("distance")
+                GlobalScope.launch {
+                    var id = deliveryDao.insert(delivery)
+                    delivery = deliveryDao.get(id)
+                }
 
                 showDeliveryOverlay(
-                    URLEncoder.encode(d.storeAddress, "utf-8"),
-                    URLEncoder.encode(d.customerAddress, "utf-8")
+                    URLEncoder.encode(delivery.storeAddress, "utf-8"),
+                    URLEncoder.encode(delivery.customerAddress, "utf-8")
                 )
             } catch (ex: Exception) {
                 Logger.log(ex.stackTraceToString(), true)
@@ -226,9 +263,10 @@ class DeliveryService : AccessibilityService() {
         }
     }
 
+    @DelicateCoroutinesApi
     @SuppressLint("MissingPermission")
     private fun showDeliveryOverlay(merchAddr: String?, custAddr: String?) {
-        fusedLocationClient.lastLocation // fixme - adds new listener each call, i think
+        fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
                 if (location != null) {
                     val url = baseUrl +
@@ -245,30 +283,38 @@ class DeliveryService : AccessibilityService() {
 
                         @SuppressLint("SetTextI18n")
                         override fun onResponse(call: Call, response: Response) {
-
                             val distTime = Json.decodeFromString<DistanceTime>(response.body!!.string())
-                            d.deliveryTime = (distTime.rows[0].elements[0].durationInTraffic.value + distTime.rows[1].elements[1].durationInTraffic.value) / 60.0
-                            d.deliveryDistance = (distTime.rows[0].elements[0].distance.value + distTime.rows[1].elements[1].distance.value) / 1609.0
+
+                            delivery.estDuration = (distTime.rows[0].elements[0].durationInTraffic.value + distTime.rows[1].elements[1].durationInTraffic.value) / 60.0
+                            delivery.distance = (distTime.rows[0].elements[0].distance.value + distTime.rows[1].elements[1].distance.value) / 1609.0
+                            delivery.estDeliveryIndex = 60.0 / delivery.estDuration * delivery.offer
 
                             ContextCompat.getMainExecutor(baseContext).execute(Runnable {
-                                tvStoreName?.text = d.storeName?.toUpperCase(Locale.ROOT)
-                                tvOfferAmount?.text = "$%.2f".format(d.offer)
-                                tvTotalMiles?.text = "%.1f mi".format(d.deliveryDistance)
-                                tvTotalTime?.text = "%.0f mins".format(d.deliveryTime)
-                                tvDollarsPerMile?.text = "$%.2f/mi".format(d.offer?.div(d.deliveryDistance))
-                                tvDeliveryIndex?.text = "Index: %.1f".format(60 / (d.deliveryTime + 3) * d.offer!!)
+                                val color = when {
+                                    delivery.estDeliveryIndex <= 10 -> Color.parseColor("#FF0000")
+                                    delivery.estDeliveryIndex < 20 && delivery.estDeliveryIndex > 10 -> Color.parseColor("#FFFF00")
+                                    delivery.estDeliveryIndex >= 20 -> Color.parseColor("#00FF00")
+                                    else -> Color.parseColor("#FFFFFF")
+                                }
+
+                                tvStoreName?.text = delivery.storeName.toUpperCase(Locale.ROOT)
+                                tvOfferAmount?.text = "$%.2f".format(delivery.offer)
+                                tvTotalMiles?.text = "%.1f miles".format(delivery.distance)
+                                tvTotalTime?.text = "%.0f mins".format(delivery.estDuration)
+                                tvDollarsPerMile?.text = "$%.2f/mi".format(delivery.offer.div(delivery.distance))
+                                tvDeliveryIndex?.text = "Delivery Index: %.1f".format(delivery.estDeliveryIndex)
+                                tvDeliveryIndex?.setTextColor(color)
                                 overlayDelivery?.visibility = View.VISIBLE
                             })
 
-                            d.deliveryIndex = 60 / (d.deliveryTime + 3) * d.offer!!
+                            GlobalScope.launch { deliveryDao.update(delivery) }
 
-                            Logger.log("OFFER             >>> $${d.offer}")
-                            Logger.log("TIME              >>> ${d.deliveryTime} mins")
-                            Logger.log("DELIVERY INDEX    >>> ${d.deliveryIndex}")
-                            Logger.log("DISTANCE (maps)   >>> ${d.deliveryDistance}")
-                            Logger.log("DISTANCE (app)    >>> ${d.distance}")
+                            Logger.log("OFFER             >>> \$%.2f".format(delivery.offer))
+                            Logger.log("DURATION          >>> %.1f mins".format(delivery.estDuration))
+                            Logger.log("DISTANCE          >>> %.1f miles".format(delivery.distance))
+                            Logger.log("ESTIMATED INDEX   >>> %.1f".format(delivery.estDeliveryIndex))
+
                             s.numOffers++
-
                             response.close()
                         }
                     })
@@ -283,7 +329,7 @@ class DeliveryService : AccessibilityService() {
     }
 
     private fun readNodeText(node: AccessibilityNodeInfo, nodeText: MutableList<String>) {
-        if (node != null && node.childCount > 0) {
+        if (node.childCount > 0) {
             for (index in 0 until node.childCount) {
                 if (!node.getChild(index).text.isNullOrEmpty()) {
                     nodeText.add(node.getChild(index).text.toString())
@@ -293,9 +339,9 @@ class DeliveryService : AccessibilityService() {
         }
     }
 
-    private fun getMinutes(start: LocalDateTime, end: LocalDateTime): Long {
+    private fun getMinutes(start: LocalDateTime?, end: LocalDateTime?): Double {
         val seconds = ChronoUnit.SECONDS.between(start, end)
-        return if(seconds < 60) 1 else seconds / 60
+        return if(seconds < 60) 1.0 else seconds / 60.0
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

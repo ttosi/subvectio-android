@@ -7,7 +7,7 @@ import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-val dir: File = File("/storage/self/primary/Android/data/com.tdc.subvectio/files/")
+val dir: File = File("/storage/self/primary/Android/data/com.tdc.subvectio/")
 val log: File = File(dir, "activity.log")
 val dataFile: File = File(dir, "dash.csv")
 val exLog: File = File(dir, "exception.log")
@@ -42,15 +42,6 @@ class Logger {
             }
 
             if(isEx) exLog.appendText("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*\n")
-        }
-
-        fun data(d: Delivery) {
-            if(!dataFile.exists()) {
-                dataFile.createNewFile()
-                dataFile.appendText("storeName,storeAddress,customerAddress,deliveryDistance,distance,deliveryTime,deliveryIndex,offer,tip,basePay,peakPay,actual,acceptedAt,arrivedAtStore,departedStoreAt,completedAt,wasDeclined\n")
-            }
-
-            dataFile.appendText("\"${d.storeName}\",\"${d.storeAddress}\",\"${d.customerAddress}\",${d.deliveryDistance},${d.distance},${d.deliveryTime},${d.deliveryIndex},${d.offer},${d.tip},${d.basePay},${d.peakPay},${d.actual},${d.acceptedAt},${d.arrivedStoreAt},${d.departedStoreAt},${d.completedAt},${d.wasDeclined}\n")
         }
 
         fun close() {

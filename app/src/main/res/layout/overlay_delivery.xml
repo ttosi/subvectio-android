@@ -104,7 +104,8 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/white" />
+                android:textStyle="bold"
+                android:textColor="@color/yellow" />
 
         </LinearLayout>
     </LinearLayout>
