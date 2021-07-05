@@ -101,6 +101,7 @@ class DeliveryService : AccessibilityService() {
                         ScreenType.DELIVERY_COMPLETE -> {
                             completeDelivery(getScreenText(event.source))
                         }
+                        else -> return
                     }
                 }
                 AccessibilityEvent.TYPE_VIEW_CLICKED -> {
@@ -121,7 +122,6 @@ class DeliveryService : AccessibilityService() {
                         "accept" -> {
                             delivery.acceptedAt = LocalDateTime.now()
                             s.numAccepted++
-
                             GlobalScope.launch { deliveryDao.update(delivery) }
 
                             Logger.log(">>> ACCEPTED")
@@ -129,18 +129,16 @@ class DeliveryService : AccessibilityService() {
                         "arrived at store" -> {
                             delivery.arrivedStoreAt = LocalDateTime.now()
                             delivery.toStoreMins = getMinutes(delivery.acceptedAt, delivery.arrivedStoreAt)
-
                             GlobalScope.launch { deliveryDao.update(delivery) }
 
-                            Logger.log("DRIVE TO STORE    >>> ${delivery.toStoreMins} mins")
+                            Logger.log("DRIVE TO STORE    >>> %.1f mins".format(delivery.toStoreMins))
                         }
                         "confirm pickup" -> {
                             delivery.departedStoreAt = LocalDateTime.now()
                             delivery.atStoreMins = getMinutes(delivery.arrivedStoreAt, delivery.departedStoreAt)
-
                             GlobalScope.launch { deliveryDao.update(delivery) }
 
-                            Logger.log("WAIT AT STORE     >>> ${delivery.atStoreMins} mins")
+                            Logger.log("WAIT AT STORE     >>> %.1f mins".format(delivery.atStoreMins))
                         }
                         // todo: FOR DEBUG ONLY
                         "complete delivery" -> {
@@ -154,8 +152,12 @@ class DeliveryService : AccessibilityService() {
                         "end dash" -> {
                             s.endAt = LocalDateTime.now()
 
+                            // todo: total earned, total tips, total base, total peak
+                            // todo: time dashing, time active, percent active, percent declined
+                            // todo: avg delivery index accepted, average delivery index declined
+                            // todo: miles driven <- maybe
                             Logger.log("--------------------- SHIFT SUMMARY ---------------------")
-                            Logger.log("SHIFT LENGTH      >>> ${getMinutes(s.startAt, s.endAt) / 60} hours")
+                            Logger.log("SHIFT LENGTH      >>> %.1f hours".format(getMinutes(s.startAt, s.endAt) / 60))
                             Logger.log("OFFERS            >>> ${s.numOffers}")
                             Logger.log("ACCEPTED          >>> ${s.numAccepted}")
                             Logger.log("DECLINED          >>> ${s.numDeclined}")
@@ -164,9 +166,13 @@ class DeliveryService : AccessibilityService() {
                         }
                         "unassign this delivery" -> {
                             s.numUnassigned++
+                            delivery.isUnassigned = true
+                            delivery.completedAt = LocalDateTime.now()
+
+                            GlobalScope.launch { deliveryDao.update(delivery) }
+
                             Logger.log(">>> UNASSIGNED")
                         }
-                        // todo: FOR DEBUG ONLY
                         "decline" -> {
                             if(isDebug) {
                                 delcineDelivery()
@@ -183,24 +189,35 @@ class DeliveryService : AccessibilityService() {
 
     @DelicateCoroutinesApi
     private fun completeDelivery(payouts: MutableList<String>) {
-        // todo: need to handle when peak pay is in effect
-
         delivery.completedAt = LocalDateTime.now()
+
+        when(payouts.contains("Peak pay")) {
+            false -> {
+                delivery.basePay = payouts[3].replace("$", "").toDouble()
+                delivery.tip = payouts[6].replace("$", "").toDouble()
+                delivery.actualPay = payouts[8].replace("$", "").toDouble()
+            }
+            true -> {
+                delivery.basePay = payouts[3].replace("$", "").toDouble()
+                delivery.peakPay = payouts[5].replace("$", "").toDouble()
+                delivery.tip = payouts[8].replace("$", "").toDouble()
+                delivery.actualPay = payouts[10].replace("$", "").toDouble()
+            }
+        }
+
         delivery.toDeliverMins = getMinutes(delivery.departedStoreAt, delivery.completedAt)
-        delivery.basePay = payouts[3].replace("$", "").toDouble()
-        delivery.tip = payouts[6].replace("$", "").toDouble()
-        delivery.actualPay = payouts[8].replace("$", "").toDouble()
         delivery.actualDuration = getMinutes(delivery.acceptedAt, delivery.completedAt)
-        delivery.actualDeliveryIndex = 60.0 / delivery.actualDuration * delivery.actualPay
+        delivery.actualDeliveryIndex = 60.0 / delivery.actualDuration* delivery.actualPay
 
         GlobalScope.launch { deliveryDao.update(delivery) }
 
-        Logger.log("DRIVE TO CUSTOMER >>> ${delivery.toDeliverMins} mins")
-        Logger.log("ACTUAL DURATION   >>> ${delivery.actualDuration} mins")
+        Logger.log("DRIVE TO CUSTOMER >>> %.1f mins".format(delivery.toDeliverMins))
+        Logger.log("ACTUAL DURATION   >>> %.1f mins".format(delivery.actualDuration))
         Logger.log("BASE PAY          >>> \$%.2f".format(delivery.basePay))
+        Logger.log("PEAK PAY          >>> \$%.2f".format(delivery.peakPay))
         Logger.log("TIP               >>> \$%.2f".format(delivery.tip))
         Logger.log("ACTUAL PAY        >>> \$%.2f".format(delivery.actualPay))
-        Logger.log("ACTUAL INDEX      >>> ${delivery.actualDeliveryIndex}")
+        Logger.log("ACTUAL INDEX      >>> %.1f".format(delivery.actualDeliveryIndex))
 
         Logger.log(">>> COMPLETE  ")
     }
@@ -287,13 +304,13 @@ class DeliveryService : AccessibilityService() {
 
                             delivery.estDuration = (distTime.rows[0].elements[0].durationInTraffic.value + distTime.rows[1].elements[1].durationInTraffic.value) / 60.0
                             delivery.distance = (distTime.rows[0].elements[0].distance.value + distTime.rows[1].elements[1].distance.value) / 1609.0
-                            delivery.estDeliveryIndex = 60.0 / delivery.estDuration * delivery.offer
+                            delivery.estDeliveryIndex = 60.0 / (delivery.estDuration + 3) * delivery.offer // add 3 minutes for avg store wait (2 min) & dropoff (1 min)
 
                             ContextCompat.getMainExecutor(baseContext).execute(Runnable {
                                 val color = when {
-                                    delivery.estDeliveryIndex <= 10 -> Color.parseColor("#FF0000")
-                                    delivery.estDeliveryIndex < 20 && delivery.estDeliveryIndex > 10 -> Color.parseColor("#FFFF00")
-                                    delivery.estDeliveryIndex >= 20 -> Color.parseColor("#00FF00")
+                                    delivery.estDeliveryIndex <= 20 -> Color.parseColor("#FF0000")
+                                    delivery.estDeliveryIndex < 30 && delivery.estDeliveryIndex > 20 -> Color.parseColor("#FFFF00")
+                                    delivery.estDeliveryIndex >= 30 -> Color.parseColor("#00FF00")
                                     else -> Color.parseColor("#FFFFFF")
                                 }
 

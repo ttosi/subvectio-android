@@ -23,9 +23,9 @@ data class Delivery(
 
     @ColumnInfo(name = "offer") var offer: Double = 0.0,
     @ColumnInfo(name = "tip") var tip: Double = 0.0,
-    @ColumnInfo(name = "base") var basePay: Double = 0.0,
-    @ColumnInfo(name = "peak") var peakPay: Double = 0.0,
-    @ColumnInfo(name = "actual") var actualPay: Double = 0.0,
+    @ColumnInfo(name = "base_pay") var basePay: Double = 0.0,
+    @ColumnInfo(name = "peak_pay") var peakPay: Double = 0.0,
+    @ColumnInfo(name = "actual_pay") var actualPay: Double = 0.0,
 
     @ColumnInfo(name = "est_delivery_index") var estDeliveryIndex: Double = 0.0,
     @ColumnInfo(name = "actual_delivery_index") var actualDeliveryIndex: Double = 0.0,

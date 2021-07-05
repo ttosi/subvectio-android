@@ -1,0 +1,545 @@
+[2021-07-04 17:09] ---------------------- SHIFT START ----------------------
+[2021-07-04 17:10] ---------------------- SHIFT START ----------------------
+[2021-07-04 17:10] ---------------------- SHIFT START ----------------------
+[2021-07-04 17:10] ---------------------- SHIFT START ----------------------
+[2021-07-04 17:20] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 17:20] ---TITLE----- New Delivery!
+[2021-07-04 17:20] ---TEXT------ New Order: Go to Popeyes
+[2021-07-04 17:20] ---BEGIN BIGTEXT---
+[2021-07-04 17:20] New Order: Go to Popeyes·1 item
+[2021-07-04 17:20] Pick up (approx 0.99 mi)
+[2021-07-04 17:20] 7111 E 22nd St, Tucson, AZ 85710, USA
+[2021-07-04 17:20] Drop off (approx 3.03 mi)
+[2021-07-04 17:20] 9000 E Speedway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 17:20] ---END BIGTEXT---
+[2021-07-04 17:20] OFFER             >>> $4.00
+[2021-07-04 17:20] DURATION          >>> 12.0 mins
+[2021-07-04 17:20] DISTANCE          >>> 5.9 miles
+[2021-07-04 17:20] ESTIMATED INDEX   >>> 20.0
+[2021-07-04 17:21] >>> DECLINED  
+[2021-07-04 17:22] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 17:22] ---TITLE----- New Delivery!
+[2021-07-04 17:22] ---TEXT------ New Order: Go to MOD Pizza
+[2021-07-04 17:22] ---BEGIN BIGTEXT---
+[2021-07-04 17:22] New Order: Go to MOD Pizza·5 items
+[2021-07-04 17:22] Pick up (approx 0.06 mi)
+[2021-07-04 17:22] 6351 E Broadway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 17:22] Drop off (approx 2.87 mi)
+[2021-07-04 17:22] 8136 E Snakeroot Dr, Tucson, AZ 85710, USA
+[2021-07-04 17:22] ---END BIGTEXT---
+[2021-07-04 17:22] OFFER             >>> $7.00
+[2021-07-04 17:22] DURATION          >>> 9.1 mins
+[2021-07-04 17:22] DISTANCE          >>> 4.0 miles
+[2021-07-04 17:22] ESTIMATED INDEX   >>> 46.3
+[2021-07-04 17:23] >>> ACCEPTED
+[2021-07-04 17:24] DRIVE TO STORE    >>> 1.2333333333333334 mins
+[2021-07-04 17:25] WAIT AT STORE     >>> 1.45 mins
+[2021-07-04 17:34] DRIVE TO CUSTOMER >>> 9.05 mins
+[2021-07-04 17:34] ACTUAL DURATION   >>> 11.75 mins
+[2021-07-04 17:34] BASE PAY          >>> $3.00
+[2021-07-04 17:34] TIP               >>> $4.00
+[2021-07-04 17:34] ACTUAL PAY        >>> $7.00
+[2021-07-04 17:34] ACTUAL INDEX      >>> 35.74468085106383
+[2021-07-04 17:34] >>> COMPLETE  
+[2021-07-04 17:40] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 17:40] ---TITLE----- New Delivery!
+[2021-07-04 17:40] ---TEXT------ New Order: Go to Eegee's
+[2021-07-04 17:40] ---BEGIN BIGTEXT---
+[2021-07-04 17:40] New Order: Go to Eegee's·4 items
+[2021-07-04 17:40] Pick up (approx 1.00 mi)
+[2021-07-04 17:40] 7102 E Broadway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 17:40] Drop off (approx 1.79 mi)
+[2021-07-04 17:40] 1162 N Sonoita Ave, Tucson, AZ 85712, USA
+[2021-07-04 17:40] ---END BIGTEXT---
+[2021-07-04 17:40] OFFER             >>> $3.50
+[2021-07-04 17:40] DURATION          >>> 9.7 mins
+[2021-07-04 17:40] DISTANCE          >>> 4.2 miles
+[2021-07-04 17:40] ESTIMATED INDEX   >>> 21.6
+[2021-07-04 17:41] >>> DECLINED  
+[2021-07-04 17:41] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 17:41] ---TITLE----- New Delivery!
+[2021-07-04 17:41] ---TEXT------ New Order: Go to BrushFire BBQ
+[2021-07-04 17:41] ---BEGIN BIGTEXT---
+[2021-07-04 17:41] New Order: Go to BrushFire BBQ·1 item
+[2021-07-04 17:41] Pick up (approx 0.23 mi)
+[2021-07-04 17:41] 7080 E 22nd St, Tucson, AZ 85710, USA
+[2021-07-04 17:41] Drop off (approx 3.49 mi)
+[2021-07-04 17:41] 2500 N Desert Links Dr, Tucson, AZ 85715, USA
+[2021-07-04 17:41] ---END BIGTEXT---
+[2021-07-04 17:41] OFFER             >>> $7.00
+[2021-07-04 17:41] DURATION          >>> 11.9 mins
+[2021-07-04 17:41] DISTANCE          >>> 4.8 miles
+[2021-07-04 17:41] ESTIMATED INDEX   >>> 35.3
+[2021-07-04 17:41] >>> ACCEPTED
+[2021-07-04 17:44] DRIVE TO STORE    >>> 2.3 mins
+[2021-07-04 17:46] WAIT AT STORE     >>> 2.816666666666667 mins
+[2021-07-04 18:01] DRIVE TO CUSTOMER >>> 14.566666666666666 mins
+[2021-07-04 18:01] ACTUAL DURATION   >>> 19.7 mins
+[2021-07-04 18:01] BASE PAY          >>> $3.00
+[2021-07-04 18:01] TIP               >>> $4.00
+[2021-07-04 18:01] ACTUAL PAY        >>> $7.00
+[2021-07-04 18:01] ACTUAL INDEX      >>> 21.31979695431472
+[2021-07-04 18:01] >>> COMPLETE  
+[2021-07-04 18:02] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 18:02] ---TITLE----- New Delivery!
+[2021-07-04 18:02] ---TEXT------ New Order: Go to McDonald's
+[2021-07-04 18:02] ---BEGIN BIGTEXT---
+[2021-07-04 18:02] New Order: Go to McDonald's·4 items
+[2021-07-04 18:02] Pick up (approx 1.57 mi)
+[2021-07-04 18:02] 9075 E Tanque Verde Rd, Tucson, AZ 85749, USA
+[2021-07-04 18:02] Drop off (approx 1.14 mi)
+[2021-07-04 18:02] 2226 N Catalina Vista Loop, Tucson, AZ 85749, USA
+[2021-07-04 18:02] ---END BIGTEXT---
+[2021-07-04 18:02] OFFER             >>> $3.00
+[2021-07-04 18:02] DURATION          >>> 11.8 mins
+[2021-07-04 18:02] DISTANCE          >>> 4.1 miles
+[2021-07-04 18:02] ESTIMATED INDEX   >>> 15.3
+[2021-07-04 18:03] >>> DECLINED  
+[2021-07-04 18:05] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 18:05] ---TITLE----- New Delivery!
+[2021-07-04 18:05] ---TEXT------ New Order: Go to El Taco Tote
+[2021-07-04 18:05] ---BEGIN BIGTEXT---
+[2021-07-04 18:05] New Order: Go to El Taco Tote·3 items
+[2021-07-04 18:05] Pick up (approx 1.28 mi)
+[2021-07-04 18:05] 1340 N Wilmot Rd, Tucson, AZ 85712, USA
+[2021-07-04 18:05] Drop off (approx 4.65 mi)
+[2021-07-04 18:05] 8032 E Nicaragua Dr, Tucson, AZ 85730, USA
+[2021-07-04 18:05] ---END BIGTEXT---
+[2021-07-04 18:05] OFFER             >>> $4.25
+[2021-07-04 18:05] DURATION          >>> 17.6 mins
+[2021-07-04 18:05] DISTANCE          >>> 8.5 miles
+[2021-07-04 18:05] ESTIMATED INDEX   >>> 14.5
+[2021-07-04 18:06] >>> DECLINED  
+[2021-07-04 18:08] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 18:08] ---TITLE----- New Delivery!
+[2021-07-04 18:08] ---TEXT------ New Order: Go to Sauce Pizza & Wine
+[2021-07-04 18:08] ---BEGIN BIGTEXT---
+[2021-07-04 18:08] New Order: Go to Sauce Pizza & Wine·3 items
+[2021-07-04 18:08] Pick up (approx 0.27 mi)
+[2021-07-04 18:08] 6450 E Grant Rd, Tucson, AZ 85715, USA
+[2021-07-04 18:08] Drop off (approx 4.43 mi)
+[2021-07-04 18:08] 4896 E Placita Arenosa, Tucson, AZ 85718, USA
+[2021-07-04 18:08] ---END BIGTEXT---
+[2021-07-04 18:08] OFFER             >>> $9.25
+[2021-07-04 18:08] DURATION          >>> 14.2 mins
+[2021-07-04 18:08] DISTANCE          >>> 7.2 miles
+[2021-07-04 18:08] ESTIMATED INDEX   >>> 39.0
+[2021-07-04 18:08] >>> ACCEPTED
+[2021-07-04 18:10] DRIVE TO STORE    >>> 2.183333333333333 mins
+[2021-07-04 18:10] WAIT AT STORE     >>> 1.0 mins
+[2021-07-04 18:14] WAIT AT STORE     >>> 3.15 mins
+[2021-07-04 18:25] DRIVE TO CUSTOMER >>> 11.45 mins
+[2021-07-04 18:25] ACTUAL DURATION   >>> 16.8 mins
+[2021-07-04 18:25] BASE PAY          >>> $3.00
+[2021-07-04 18:25] TIP               >>> $7.00
+[2021-07-04 18:25] ACTUAL PAY        >>> $10.00
+[2021-07-04 18:25] ACTUAL INDEX      >>> 35.71428571428571
+[2021-07-04 18:25] >>> COMPLETE  
+[2021-07-04 18:27] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 18:27] ---TITLE----- New Delivery!
+[2021-07-04 18:27] ---TEXT------ New Order: Go to Fiamme Pizza Napoletana
+[2021-07-04 18:27] ---BEGIN BIGTEXT---
+[2021-07-04 18:27] New Order: Go to Fiamme Pizza Napoletana·1 item
+[2021-07-04 18:27] Pick up (approx 0.99 mi)
+[2021-07-04 18:27] 4706 E Sunrise Dr, Tucson, AZ 85718, USA
+[2021-07-04 18:27] Drop off (approx 2.80 mi)
+[2021-07-04 18:27] 7000 N Resort Dr, Tucson, AZ 85750, USA
+[2021-07-04 18:27] ---END BIGTEXT---
+[2021-07-04 18:27] OFFER             >>> $7.00
+[2021-07-04 18:27] DURATION          >>> 13.1 mins
+[2021-07-04 18:27] DISTANCE          >>> 5.8 miles
+[2021-07-04 18:27] ESTIMATED INDEX   >>> 32.0
+[2021-07-04 18:27] >>> ACCEPTED
+[2021-07-04 18:31] DRIVE TO STORE    >>> 4.483333333333333 mins
+[2021-07-04 18:32] >>> UNASSIGNED
+[2021-07-04 18:38] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 18:38] ---TITLE----- New Delivery!
+[2021-07-04 18:38] ---TEXT------ New Order: Go to Tender Shack
+[2021-07-04 18:38] ---BEGIN BIGTEXT---
+[2021-07-04 18:38] New Order: Go to Tender Shack·4 items
+[2021-07-04 18:38] Pick up (approx 1.97 mi)
+[2021-07-04 18:38] 4871 E Grant Rd, Tucson, AZ 85712, USA
+[2021-07-04 18:38] Drop off (approx 5.98 mi)
+[2021-07-04 18:38] 9536 E Ventaso Cir, Tucson, AZ 85715, USA
+[2021-07-04 18:38] ---END BIGTEXT---
+[2021-07-04 18:38] OFFER             >>> $6.75
+[2021-07-04 18:38] DURATION          >>> 18.5 mins
+[2021-07-04 18:38] DISTANCE          >>> 9.0 miles
+[2021-07-04 18:38] ESTIMATED INDEX   >>> 21.9
+[2021-07-04 18:38] >>> ACCEPTED
+[2021-07-04 18:43] DRIVE TO STORE    >>> 5.316666666666666 mins
+[2021-07-04 18:44] WAIT AT STORE     >>> 1.0 mins
+[2021-07-04 18:58] DRIVE TO CUSTOMER >>> 13.983333333333333 mins
+[2021-07-04 18:58] ACTUAL DURATION   >>> 20.166666666666668 mins
+[2021-07-04 18:58] BASE PAY          >>> $3.75
+[2021-07-04 18:58] TIP               >>> $3.00
+[2021-07-04 18:58] ACTUAL PAY        >>> $6.75
+[2021-07-04 18:58] ACTUAL INDEX      >>> 20.08264462809917
+[2021-07-04 18:58] >>> COMPLETE  
+[2021-07-04 19:04] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 19:04] ---TITLE----- New Delivery!
+[2021-07-04 19:04] ---TEXT------ New Order: Go to 7 Eleven
+[2021-07-04 19:04] ---BEGIN BIGTEXT---
+[2021-07-04 19:04] New Order: Go to 7 Eleven·1 item
+[2021-07-04 19:04] Pick up (approx 0.48 mi)
+[2021-07-04 19:04] 7084 E Broadway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 19:04] Drop off (approx 0.60 mi)
+[2021-07-04 19:04] 6866 E Kenyon Dr, Tucson, AZ 85710, USA
+[2021-07-04 19:04] ---END BIGTEXT---
+[2021-07-04 19:04] OFFER             >>> $7.00
+[2021-07-04 19:04] DURATION          >>> 5.7 mins
+[2021-07-04 19:04] DISTANCE          >>> 1.7 miles
+[2021-07-04 19:04] ESTIMATED INDEX   >>> 74.3
+[2021-07-04 19:05] >>> DECLINED  
+[2021-07-04 19:07] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 19:07] ---TITLE----- New Delivery!
+[2021-07-04 19:07] ---TEXT------ New Order: Go to Cold Stone Creamery
+[2021-07-04 19:07] ---BEGIN BIGTEXT---
+[2021-07-04 19:07] New Order: Go to Cold Stone Creamery·2 items
+[2021-07-04 19:07] Pick up (approx 0.47 mi)
+[2021-07-04 19:07] 5870 E Broadway Blvd, Tucson, AZ 85711, USA
+[2021-07-04 19:07] Drop off (approx 1.92 mi)
+[2021-07-04 19:07] 4510 E 19th St, Tucson, AZ 85711, USA
+[2021-07-04 19:07] ---END BIGTEXT---
+[2021-07-04 19:07] OFFER             >>> $6.00
+[2021-07-04 19:07] DURATION          >>> 9.6 mins
+[2021-07-04 19:07] DISTANCE          >>> 3.3 miles
+[2021-07-04 19:07] ESTIMATED INDEX   >>> 37.7
+[2021-07-04 19:08] >>> ACCEPTED
+[2021-07-04 19:09] DRIVE TO STORE    >>> 1.0 mins
+[2021-07-04 19:13] WAIT AT STORE     >>> 4.75 mins
+[2021-07-04 19:20] DRIVE TO CUSTOMER >>> 6.25 mins
+[2021-07-04 19:20] ACTUAL DURATION   >>> 12.0 mins
+[2021-07-04 19:20] BASE PAY          >>> $3.00
+[2021-07-04 19:20] TIP               >>> $3.00
+[2021-07-04 19:20] ACTUAL PAY        >>> $6.00
+[2021-07-04 19:20] ACTUAL INDEX      >>> 30.0
+[2021-07-04 19:20] >>> COMPLETE  
+[2021-07-04 19:20] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 19:20] ---TITLE----- New Delivery!
+[2021-07-04 19:20] ---TEXT------ New Order: Go to Claim Jumper
+[2021-07-04 19:20] ---BEGIN BIGTEXT---
+[2021-07-04 19:20] New Order: Go to Claim Jumper·2 items
+[2021-07-04 19:20] Pick up (approx 1.25 mi)
+[2021-07-04 19:20] 3761 E Broadway Blvd, Tucson, AZ 85716
+[2021-07-04 19:20] Drop off (approx 1.26 mi)
+[2021-07-04 19:20] 433 S Stratford Dr, Tucson, AZ 85716, USA
+[2021-07-04 19:20] ---END BIGTEXT---
+[2021-07-04 19:20] OFFER             >>> $3.25
+[2021-07-04 19:20] DURATION          >>> 9.3 mins
+[2021-07-04 19:20] DISTANCE          >>> 3.4 miles
+[2021-07-04 19:20] ESTIMATED INDEX   >>> 21.1
+[2021-07-04 19:20] >>> DECLINED  
+[2021-07-04 19:20] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 19:20] ---TITLE----- New Delivery!
+[2021-07-04 19:20] ---TEXT------ New Order: Go to Golden Corral
+[2021-07-04 19:20] ---BEGIN BIGTEXT---
+[2021-07-04 19:20] New Order: Go to Golden Corral·3 items
+[2021-07-04 19:20] Pick up (approx 0.34 mi)
+[2021-07-04 19:20] 4380 E 22nd St, Tucson, AZ 85711, USA
+[2021-07-04 19:20] Drop off (approx 2.74 mi)
+[2021-07-04 19:20] 1993 E Vera Cruz Vista St, Tucson, AZ 85713, USA
+[2021-07-04 19:20] ---END BIGTEXT---
+[2021-07-04 19:20] OFFER             >>> $7.00
+[2021-07-04 19:20] DURATION          >>> 11.6 mins
+[2021-07-04 19:20] DISTANCE          >>> 4.8 miles
+[2021-07-04 19:20] ESTIMATED INDEX   >>> 36.2
+[2021-07-04 19:21] >>> ACCEPTED
+[2021-07-04 19:23] DRIVE TO STORE    >>> 2.683333333333333 mins
+[2021-07-04 19:28] >>> UNASSIGNED
+[2021-07-04 19:30] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 19:30] ---TITLE----- New Delivery!
+[2021-07-04 19:30] ---TEXT------ New Order: Go to Great Wall China
+[2021-07-04 19:30] ---BEGIN BIGTEXT---
+[2021-07-04 19:30] New Order: Go to Great Wall China·2 items
+[2021-07-04 19:30] Pick up (approx 0.95 mi)
+[2021-07-04 19:30] 2445 S Craycroft Rd, Tucson, AZ 85711, USA
+[2021-07-04 19:30] Drop off (approx 3.80 mi)
+[2021-07-04 19:30] 1210 N Dodge Blvd, Tucson, AZ 85716, USA
+[2021-07-04 19:30] ---END BIGTEXT---
+[2021-07-04 19:30] OFFER             >>> $5.00
+[2021-07-04 19:30] DURATION          >>> 14.2 mins
+[2021-07-04 19:30] DISTANCE          >>> 6.8 miles
+[2021-07-04 19:30] ESTIMATED INDEX   >>> 21.2
+[2021-07-04 19:30] >>> DECLINED  
+[2021-07-04 19:31] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 19:31] ---TITLE----- New Delivery!
+[2021-07-04 19:31] ---TEXT------ New Order: Go to El Pollo Loco
+[2021-07-04 19:31] ---BEGIN BIGTEXT---
+[2021-07-04 19:31] New Order: Go to El Pollo Loco·1 item
+[2021-07-04 19:31] Pick up (approx 1.06 mi)
+[2021-07-04 19:31] 5601 E Broadway Blvd, Tucson, AZ 85711, USA
+[2021-07-04 19:31] Drop off (approx 3.27 mi)
+[2021-07-04 19:31] 7671 E Tanque Verde Rd, Tucson, AZ 85715, USA
+[2021-07-04 19:31] ---END BIGTEXT---
+[2021-07-04 19:31] OFFER             >>> $7.50
+[2021-07-04 19:31] DURATION          >>> 15.6 mins
+[2021-07-04 19:31] DISTANCE          >>> 6.0 miles
+[2021-07-04 19:31] ESTIMATED INDEX   >>> 28.8
+[2021-07-04 19:31] >>> ACCEPTED
+[2021-07-04 19:34] DRIVE TO STORE    >>> 3.3 mins
+[2021-07-04 19:38] WAIT AT STORE     >>> 3.9833333333333334 mins
+[2021-07-04 19:54] DRIVE TO CUSTOMER >>> 15.35 mins
+[2021-07-04 19:54] ACTUAL DURATION   >>> 22.65 mins
+[2021-07-04 19:54] BASE PAY          >>> $4.50
+[2021-07-04 19:54] TIP               >>> $3.00
+[2021-07-04 19:54] ACTUAL PAY        >>> $7.50
+[2021-07-04 19:54] ACTUAL INDEX      >>> 19.867549668874172
+[2021-07-04 19:54] >>> COMPLETE  
+[2021-07-04 19:54] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 19:54] ---TITLE----- New Delivery!
+[2021-07-04 19:54] ---TEXT------ New Order: Go to Panda Express
+[2021-07-04 19:54] ---BEGIN BIGTEXT---
+[2021-07-04 19:54] New Order: Go to Panda Express·2 items
+[2021-07-04 19:54] Pick up (approx 0.65 mi)
+[2021-07-04 19:54] 7111 E Tanque Verde Rd, Tucson, AZ 85715, USA
+[2021-07-04 19:54] Drop off (approx 1.74 mi)
+[2021-07-04 19:54] 6512 E Shepherd Hills, Tucson, AZ 85710, USA
+[2021-07-04 19:54] ---END BIGTEXT---
+[2021-07-04 19:54] OFFER             >>> $5.75
+[2021-07-04 19:54] DURATION          >>> 9.8 mins
+[2021-07-04 19:54] DISTANCE          >>> 3.2 miles
+[2021-07-04 19:54] ESTIMATED INDEX   >>> 35.1
+[2021-07-04 19:54] >>> ACCEPTED
+[2021-07-04 19:56] DRIVE TO STORE    >>> 2.0166666666666666 mins
+[2021-07-04 19:56] WAIT AT STORE     >>> 1.0 mins
+[2021-07-04 20:03] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:03] ---TITLE----- New Delivery!
+[2021-07-04 20:03] ---TEXT------ New Order: Go to MOD Pizza
+[2021-07-04 20:03] ---BEGIN BIGTEXT---
+[2021-07-04 20:03] New Order: Go to MOD Pizza·3 items
+[2021-07-04 20:03] Pick up (approx 0.54 mi)
+[2021-07-04 20:03] 6351 E Broadway Blvd #Suite 200, Tucson, AZ 85710, US
+[2021-07-04 20:03] Drop off (approx 2.76 mi)
+[2021-07-04 20:03] 8448 E Beverly St, Tucson, AZ 85710, USA
+[2021-07-04 20:03] ---END BIGTEXT---
+[2021-07-04 20:03] OFFER             >>> $5.75
+[2021-07-04 20:03] DURATION          >>> 12.2 mins
+[2021-07-04 20:03] DISTANCE          >>> 4.7 miles
+[2021-07-04 20:03] ESTIMATED INDEX   >>> 28.4
+[2021-07-04 20:03] >>> DECLINED  
+[2021-07-04 20:04] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:04] ---TITLE----- New Delivery!
+[2021-07-04 20:04] ---TEXT------ New Order: Go to Brothers Noodles
+[2021-07-04 20:04] ---BEGIN BIGTEXT---
+[2021-07-04 20:04] New Order: Go to Brothers Noodles·2 items
+[2021-07-04 20:04] Pick up (approx 1.25 mi)
+[2021-07-04 20:04] 5605 E Speedway Blvd, Tucson, AZ 85712, USA
+[2021-07-04 20:04] Drop off (approx 4.84 mi)
+[2021-07-04 20:04] 3740 S Amos Pl, Tucson, AZ 85730, USA
+[2021-07-04 20:04] ---END BIGTEXT---
+[2021-07-04 20:04] OFFER             >>> $5.75
+[2021-07-04 20:04] DURATION          >>> 20.4 mins
+[2021-07-04 20:04] DISTANCE          >>> 9.2 miles
+[2021-07-04 20:04] ESTIMATED INDEX   >>> 16.9
+[2021-07-04 20:04] >>> DECLINED  
+[2021-07-04 20:04] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:04] ---TITLE----- New Delivery!
+[2021-07-04 20:04] ---TEXT------ New Order: Go to Panda Express
+[2021-07-04 20:04] ---BEGIN BIGTEXT---
+[2021-07-04 20:04] New Order: Go to Panda Express·2 items
+[2021-07-04 20:04] Pick up (approx 1.71 mi)
+[2021-07-04 20:04] 7111 E Tanque Verde Rd, Tucson, AZ 85715, USA
+[2021-07-04 20:04] Drop off (approx 2.87 mi)
+[2021-07-04 20:04] 114 S Camino Seco, Tucson, AZ 85710, USA
+[2021-07-04 20:04] ---END BIGTEXT---
+[2021-07-04 20:04] OFFER             >>> $3.75
+[2021-07-04 20:04] DURATION          >>> 17.4 mins
+[2021-07-04 20:04] DISTANCE          >>> 6.7 miles
+[2021-07-04 20:04] ESTIMATED INDEX   >>> 12.9
+[2021-07-04 20:04] >>> DECLINED  
+[2021-07-04 20:05] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:05] ---TITLE----- New Delivery!
+[2021-07-04 20:05] ---TEXT------ New Order: Go to El Pollo Loco
+[2021-07-04 20:05] ---BEGIN BIGTEXT---
+[2021-07-04 20:05] New Order: Go to El Pollo Loco·3 items
+[2021-07-04 20:05] Pick up (approx 1.22 mi)
+[2021-07-04 20:05] 5601 E Broadway Blvd, Tucson, AZ 85711, USA
+[2021-07-04 20:05] Drop off (approx 5.96 mi)
+[2021-07-04 20:05] 2000 E River Rd, Tucson, AZ 85718, USA
+[2021-07-04 20:05] ---END BIGTEXT---
+[2021-07-04 20:05] OFFER             >>> $4.25
+[2021-07-04 20:05] DURATION          >>> 19.8 mins
+[2021-07-04 20:05] DISTANCE          >>> 9.8 miles
+[2021-07-04 20:05] ESTIMATED INDEX   >>> 12.9
+[2021-07-04 20:05] >>> DECLINED  
+[2021-07-04 20:05] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:05] ---TITLE----- New Delivery!
+[2021-07-04 20:05] ---TEXT------ New Order: Go to El Pollo Loco
+[2021-07-04 20:05] ---BEGIN BIGTEXT---
+[2021-07-04 20:05] New Order: Go to El Pollo Loco·1 item
+[2021-07-04 20:05] Pick up (approx 1.13 mi)
+[2021-07-04 20:05] 5601 E Broadway Blvd, Tucson, AZ 85711, USA
+[2021-07-04 20:05] Drop off (approx 1.30 mi)
+[2021-07-04 20:05] 1301 S Rosemont Ave, Tucson, AZ 85711, USA
+[2021-07-04 20:05] ---END BIGTEXT---
+[2021-07-04 20:05] OFFER             >>> $6.00
+[2021-07-04 20:05] DURATION          >>> 8.4 mins
+[2021-07-04 20:05] DISTANCE          >>> 3.5 miles
+[2021-07-04 20:05] ESTIMATED INDEX   >>> 42.9
+[2021-07-04 20:05] >>> DECLINED  
+[2021-07-04 20:05] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:05] ---TITLE----- New Delivery!
+[2021-07-04 20:05] ---TEXT------ New Order: Go to Five Guys
+[2021-07-04 20:05] ---BEGIN BIGTEXT---
+[2021-07-04 20:05] New Order: Go to Five Guys·3 items
+[2021-07-04 20:05] Pick up (approx 1.22 mi)
+[2021-07-04 20:05] 5566 E Broadway Blvd #100, Tucson, AZ 85711, USA
+[2021-07-04 20:05] Drop off (approx 5.03 mi)
+[2021-07-04 20:05] 1201 N Park Ave, Tucson, AZ 85719, USA
+[2021-07-04 20:05] ---END BIGTEXT---
+[2021-07-04 20:05] OFFER             >>> $4.82
+[2021-07-04 20:05] DURATION          >>> 18.1 mins
+[2021-07-04 20:05] DISTANCE          >>> 8.0 miles
+[2021-07-04 20:05] ESTIMATED INDEX   >>> 16.0
+[2021-07-04 20:05] >>> DECLINED  
+[2021-07-04 20:06] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:06] ---TITLE----- New Delivery!
+[2021-07-04 20:06] ---TEXT------ New Order: Go to Brothers Noodles
+[2021-07-04 20:06] ---BEGIN BIGTEXT---
+[2021-07-04 20:06] New Order: Go to Brothers Noodles·7 items
+[2021-07-04 20:06] Pick up (approx 0.97 mi)
+[2021-07-04 20:06] 5605 E Speedway Blvd, Tucson, AZ 85712, USA
+[2021-07-04 20:06] Drop off (approx 3.71 mi)
+[2021-07-04 20:06] 8665 E Speedway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 20:06] ---END BIGTEXT---
+[2021-07-04 20:06] OFFER             >>> $4.00
+[2021-07-04 20:06] DURATION          >>> 14.7 mins
+[2021-07-04 20:06] DISTANCE          >>> 5.4 miles
+[2021-07-04 20:06] ESTIMATED INDEX   >>> 16.3
+[2021-07-04 20:06] >>> DECLINED  
+[2021-07-04 20:09] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:09] ---TITLE----- New Delivery!
+[2021-07-04 20:09] ---TEXT------ New Order: Go to Burger King
+[2021-07-04 20:09] ---BEGIN BIGTEXT---
+[2021-07-04 20:09] New Order: Go to Burger King·1 item
+[2021-07-04 20:09] Pick up (approx 1.71 mi)
+[2021-07-04 20:09] 7880 E Speedway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 20:09] Drop off (approx 0.94 mi)
+[2021-07-04 20:09] 8665 E Speedway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 20:09] ---END BIGTEXT---
+[2021-07-04 20:09] OFFER             >>> $3.00
+[2021-07-04 20:09] DURATION          >>> 11.5 mins
+[2021-07-04 20:09] DISTANCE          >>> 3.9 miles
+[2021-07-04 20:09] ESTIMATED INDEX   >>> 15.7
+[2021-07-04 20:09] >>> DECLINED  
+[2021-07-04 20:14] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:14] ---TITLE----- New Delivery!
+[2021-07-04 20:14] ---TEXT------ New Order: Go to Filibertos Mexican Food
+[2021-07-04 20:14] ---BEGIN BIGTEXT---
+[2021-07-04 20:14] New Order: Go to Filibertos Mexican Food·5 items
+[2021-07-04 20:14] Pick up (approx 0.47 mi)
+[2021-07-04 20:14] 7031 E Tanque Verde Rd, Tucson, AZ 85715, USA
+[2021-07-04 20:14] Drop off (approx 1.26 mi)
+[2021-07-04 20:14] 6477 E Speedway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 20:14] ---END BIGTEXT---
+[2021-07-04 20:14] OFFER             >>> $7.00
+[2021-07-04 20:14] DURATION          >>> 10.7 mins
+[2021-07-04 20:14] DISTANCE          >>> 2.8 miles
+[2021-07-04 20:14] ESTIMATED INDEX   >>> 39.1
+[2021-07-04 20:14] >>> ACCEPTED
+[2021-07-04 20:16] DRIVE TO STORE    >>> 2.466666666666667 mins
+[2021-07-04 20:19] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:19] ---TITLE----- New Delivery!
+[2021-07-04 20:19] ---TEXT------ New Order: Go to 7-Eleven
+[2021-07-04 20:19] ---BEGIN BIGTEXT---
+[2021-07-04 20:19] New Order: Go to 7-Eleven·4 items
+[2021-07-04 20:19] Pick up (approx 2.12 mi)
+[2021-07-04 20:19] 7084 E Broadway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 20:19] Drop off (approx 1.32 mi)
+[2021-07-04 20:19] 6477 E Speedway Blvd, Tucson, AZ 85710, USA
+[2021-07-04 20:19] ---END BIGTEXT---
+[2021-07-04 20:19] OFFER             >>> $7.00
+[2021-07-04 20:19] DURATION          >>> 13.1 mins
+[2021-07-04 20:19] DISTANCE          >>> 4.4 miles
+[2021-07-04 20:19] ESTIMATED INDEX   >>> 32.1
+[2021-07-04 20:19] >>> DECLINED  
+[2021-07-04 20:28] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:28] ---TITLE----- New Delivery!
+[2021-07-04 20:28] ---TEXT------ New Order: Go to Riliberto's Fresh Mexican Food
+[2021-07-04 20:28] ---BEGIN BIGTEXT---
+[2021-07-04 20:28] New Order: Go to Riliberto's Fresh Mexican Food·1 item
+[2021-07-04 20:28] Pick up (approx 2.67 mi)
+[2021-07-04 20:28] 4352 E Speedway Blvd, Tucson, AZ 85712, USA
+[2021-07-04 20:28] Drop off (approx 3.83 mi)
+[2021-07-04 20:28] 2550 E River Rd, Tucson, AZ 85718, USA
+[2021-07-04 20:28] ---END BIGTEXT---
+[2021-07-04 20:28] OFFER             >>> $4.75
+[2021-07-04 20:28] DURATION          >>> 16.3 mins
+[2021-07-04 20:28] DISTANCE          >>> 7.9 miles
+[2021-07-04 20:28] ESTIMATED INDEX   >>> 17.5
+[2021-07-04 20:28] >>> DECLINED  
+[2021-07-04 20:29] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:29] ---TITLE----- New Delivery!
+[2021-07-04 20:29] ---TEXT------ New Order: Go to eegee's
+[2021-07-04 20:29] ---BEGIN BIGTEXT---
+[2021-07-04 20:29] New Order: Go to eegee's·7 items
+[2021-07-04 20:29] Pick up (approx 2.25 mi)
+[2021-07-04 20:29] 1105 S Craycroft Rd, Tucson, AZ 85711, USA
+[2021-07-04 20:29] Drop off (approx 1.55 mi)
+[2021-07-04 20:29] 4509 E 12th St, Tucson, AZ 85711, USA
+[2021-07-04 20:29] ---END BIGTEXT---
+[2021-07-04 20:29] OFFER             >>> $4.75
+[2021-07-04 20:29] DURATION          >>> 13.1 mins
+[2021-07-04 20:29] DISTANCE          >>> 5.6 miles
+[2021-07-04 20:29] ESTIMATED INDEX   >>> 21.7
+[2021-07-04 20:29] >>> DECLINED  
+[2021-07-04 20:29] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:29] ---TITLE----- New Delivery!
+[2021-07-04 20:29] ---TEXT------ New Order: Go to Riliberto's Fresh Mexican Food
+[2021-07-04 20:29] ---BEGIN BIGTEXT---
+[2021-07-04 20:29] New Order: Go to Riliberto's Fresh Mexican Food·3 items
+[2021-07-04 20:29] Pick up (approx 2.47 mi)
+[2021-07-04 20:29] 4352 E Speedway Blvd, Tucson, AZ 85712, USA
+[2021-07-04 20:29] Drop off (approx 3.38 mi)
+[2021-07-04 20:29] 1521 N Park Ave, Tucson, AZ 85719, USA
+[2021-07-04 20:29] ---END BIGTEXT---
+[2021-07-04 20:29] OFFER             >>> $7.50
+[2021-07-04 20:29] DURATION          >>> 13.9 mins
+[2021-07-04 20:29] DISTANCE          >>> 6.4 miles
+[2021-07-04 20:29] ESTIMATED INDEX   >>> 32.3
+[2021-07-04 20:29] >>> ACCEPTED
+[2021-07-04 20:36] DRIVE TO STORE    >>> 6.083333333333333 mins
+[2021-07-04 20:36] WAIT AT STORE     >>> 1.0 mins
+[2021-07-04 20:45] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 20:45] ---TITLE----- New Delivery!
+[2021-07-04 20:45] ---TEXT------ New Order: Go to Hana Hawaiian Grill
+[2021-07-04 20:45] ---BEGIN BIGTEXT---
+[2021-07-04 20:45] New Order: Go to Hana Hawaiian Grill·2 items
+[2021-07-04 20:45] Pick up (approx 0.65 mi)
+[2021-07-04 20:45] 940 E University Blvd, Tucson, AZ 85719, USA
+[2021-07-04 20:45] Drop off (approx 6.46 mi)
+[2021-07-04 20:45] 6795 Calle La Paz, Tucson, AZ 85715, USA
+[2021-07-04 20:45] ---END BIGTEXT---
+[2021-07-04 20:45] OFFER             >>> $7.50
+[2021-07-04 20:45] DURATION          >>> 23.5 mins
+[2021-07-04 20:45] DISTANCE          >>> 8.9 miles
+[2021-07-04 20:45] ESTIMATED INDEX   >>> 19.2
+[2021-07-04 20:52] WAIT AT STORE     >>> 1.0 mins
+[2021-07-04 21:10] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 21:10] ---TITLE----- New Delivery!
+[2021-07-04 21:10] ---TEXT------ New Order: Go to It's Just Wings
+[2021-07-04 21:10] ---BEGIN BIGTEXT---
+[2021-07-04 21:10] New Order: Go to It's Just Wings·3 items
+[2021-07-04 21:10] Pick up (approx 2.57 mi)
+[2021-07-04 21:10] 5150 E Broadway Blvd, Tucson, AZ 85711, USA
+[2021-07-04 21:10] Drop off (approx 4.13 mi)
+[2021-07-04 21:10] 8027 E Judicial St, Tucson, AZ 85730, USA
+[2021-07-04 21:10] ---END BIGTEXT---
+[2021-07-04 21:10] *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[2021-07-04 21:10] ---TITLE----- New Delivery!
+[2021-07-04 21:10] ---TEXT------ New Order: Go to Chili's Grill & Bar
+[2021-07-04 21:10] ---BEGIN BIGTEXT---
+[2021-07-04 21:10] New Order: Go to Chili's Grill & Bar·4 items
+[2021-07-04 21:10] Pick up (approx 2.57 mi)
+[2021-07-04 21:10] 5150 E Broadway Blvd, Tucson, AZ 85711, USA
+[2021-07-04 21:10] Drop off (approx 4.42 mi)
+[2021-07-04 21:10] 3431 S Lakeside Pl, Tucson, AZ 85730, USA
+[2021-07-04 21:10] ---END BIGTEXT---
+[2021-07-04 21:46] --------------------- SHIFT SUMMARY ---------------------
+[2021-07-04 21:46] SHIFT LENGTH      >>> 8.765837711397768E12 hours
+[2021-07-04 21:46] OFFERS            >>> 0
+[2021-07-04 21:46] ACCEPTED          >>> 0
+[2021-07-04 21:46] DECLINED          >>> 0
+[2021-07-04 21:46] UNASSIGNED        >>> 0
+[2021-07-04 21:46] ----------------------- SHIFT END -----------------------
