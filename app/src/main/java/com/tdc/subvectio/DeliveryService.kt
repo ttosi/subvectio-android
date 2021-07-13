@@ -89,20 +89,17 @@ class DeliveryService : AccessibilityService() {
                 }
                 AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
                     val text = getScreenText(event.source)
-                    val screen = Screen.type(text)
 
                     // log all missing screens
-                    if(text.count() > 0 && text.hashCode() != lastScreenHashCode) {
-                        lastScreenHashCode = text.hashCode()
-                        Logger.logScreen(">> $screen (${text.hashCode()})")
-                        if(screen == ScreenType.UNKNOWN) {
-                            Logger.logScreen("$text")
-                        }
-                    }
+//                    if(text.count() > 0 && text.hashCode() != lastScreenHashCode) {
+//                        lastScreenHashCode = text.hashCode()
+//                        Logger.logScreen(">> $screen (${text.hashCode()})")
+//                        if(screen == ScreenType.UNKNOWN) {
+//                            Logger.logScreen("$text")
+//                        }
+//                    }
 
-
-
-                    when(screen) {
+                    when(Screen.type(text)) {
                         ScreenType.OFFER_SCREEN -> offerScreenText = text
                         ScreenType.ARE_YOU_SURE_DECLINE_SCREEN -> overlayDelivery?.visibility = View.GONE
                         ScreenType.DECLINED_SCREEN -> delcineDelivery()
@@ -303,9 +300,8 @@ class DeliveryService : AccessibilityService() {
             .addOnSuccessListener { location ->
                 if (location != null) {
 
-                    println(">>>>>>>---- we're neddw")
-
-                    val url = "http://192.168.68.108:5001/api/delivery"
+//                    val url = "http://192.168.68.108:5001/api/delivery"
+                    val url = "http://subvectio.tdc.app/api/delivery"
 
                     val body = FormBody.Builder()
                         .add("driverLatitude", "${location.latitude}")
