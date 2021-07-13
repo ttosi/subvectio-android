@@ -298,52 +298,52 @@ class DeliveryService : AccessibilityService() {
 
     @DelicateCoroutinesApi
     @SuppressLint("MissingPermission")
-    private fun showDeliveryOverlay(merchAddr: String?, custAddr: String?) {
+    private fun showDeliveryOverlay(storeAddr: String?, custAddr: String?) {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
                 if (location != null) {
-                    val url = baseUrl +
-                            "&origins=${location.latitude},${location.longitude}|${merchAddr}" +
-                            "&destinations=${merchAddr}|${custAddr}${optionsUrl}"
+
+                    println(">>>>>>>---- we're neddw")
+
+                    val url = "http://192.168.68.108:5001/api/delivery"
+
+                    val body = FormBody.Builder()
+                        .add("driverLatitude", "${location.latitude}")
+                        .add("driverLongitude", "${location.longitude}")
+                        .add("storeAddress", storeAddr!!)
+                        .add("customerAddress", custAddr!!)
+                        .build()
 
                     val req = Request.Builder()
                         .url(url)
                         .addHeader("token", "04e5e24a540544d2b5158de16cc0c22a")
+                        .post(body)
                         .build()
 
                     client.newCall(req).enqueue(object : Callback {
-                        override fun onFailure(call: Call, e: IOException) {}
+                        override fun onFailure(call: Call, e: IOException) {
+                            println(e.stackTraceToString())
+                        }
 
                         @SuppressLint("SetTextI18n")
                         override fun onResponse(call: Call, response: Response) {
-                            val distTime = Json.decodeFromString<DistanceTime>(response.body!!.string())
+                            val route = Json.decodeFromString<Route>(response.body!!.string())
 
-                            delivery.estDuration = (distTime.rows[0].elements[0].durationInTraffic.value + distTime.rows[1].elements[1].durationInTraffic.value) / 60.0
-                            delivery.distance = (distTime.rows[0].elements[0].distance.value + distTime.rows[1].elements[1].distance.value) / 1609.0
-                            delivery.estDeliveryIndex = 60.0 / (delivery.estDuration + 3) * delivery.offer // add 3 minutes for avg store wait (2 min) & dropoff (1 min)
+                            for(tag in route.tags) {
+                                // println(">>-->>>>>> ${tag.name}")
+                            }
 
+                            delivery.estDuration = route.duration
+                            delivery.distance = route.distance
+                            delivery.estDeliveryIndex = 60.0 / (delivery.estDuration + 3) * delivery.offer
+//
                             ContextCompat.getMainExecutor(baseContext).execute(Runnable {
                                 val color = when {
-                                    delivery.estDeliveryIndex < 20 -> Color.parseColor("#FF0000")
-                                    delivery.estDeliveryIndex < 30 && delivery.estDeliveryIndex >= 20 -> Color.parseColor("#FFFF00")
-                                    delivery.estDeliveryIndex >= 30 -> Color.parseColor("#00FF00")
+                                    delivery.estDeliveryIndex < 18 -> Color.parseColor("#FF0000")
+                                    delivery.estDeliveryIndex < 27 && delivery.estDeliveryIndex >= 18 -> Color.parseColor("#FFFF00")
+                                    delivery.estDeliveryIndex >= 27 -> Color.parseColor("#00FF00")
                                     else -> Color.parseColor("#FFFFFF")
                                 }
-
-                                // add geotags
-//                                <TextView
-//                                android:text="CAMPUS"
-//                                android:textStyle="bold"
-//                                android:layout_width="wrap_content"
-//                                android:layout_height="wrap_content"
-//                                android:padding="10dp"
-//                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-//                                android:textColor="@color/white" />
-
-//                                var tagview: TextView = TextView(baseContext)
-//                                tagview.text = "CAMPUS"
-//                                tagview.setTextColor(Color.parseColor("#000000"))
-
 
                                 tvStoreName?.text = delivery.storeName.toUpperCase(Locale.ROOT)
                                 tvOfferAmount?.text = "$%.2f".format(delivery.offer)
