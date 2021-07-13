@@ -14,10 +14,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -40,6 +37,7 @@ class DeliveryService : AccessibilityService() {
     private val client = OkHttpClient()
 
     private var offerScreenText: MutableList<String> = mutableListOf()
+    private var lastScreenHashCode: Int = 0
 
     private var overlayDelivery: View? = null
     private var tvStoreName: TextView? = null
@@ -90,17 +88,25 @@ class DeliveryService : AccessibilityService() {
                     }
                 }
                 AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-                    when(Screen.type(getScreenText(event.source))) {
-                        ScreenType.OFFER_SCREEN -> {
-                            offerScreenText = getScreenText(event.source)
+                    val text = getScreenText(event.source)
+                    val screen = Screen.type(text)
+
+                    // log all missing screens
+                    if(text.count() > 0 && text.hashCode() != lastScreenHashCode) {
+                        lastScreenHashCode = text.hashCode()
+                        Logger.logScreen(">> $screen (${text.hashCode()})")
+                        if(screen == ScreenType.UNKNOWN) {
+                            Logger.logScreen("$text")
                         }
+                    }
+
+
+
+                    when(screen) {
+                        ScreenType.OFFER_SCREEN -> offerScreenText = text
                         ScreenType.ARE_YOU_SURE_DECLINE_SCREEN -> overlayDelivery?.visibility = View.GONE
-                        ScreenType.DECLINED_SCREEN -> {
-                            delcineDelivery()
-                        }
-                        ScreenType.DELIVERY_COMPLETE -> {
-                            completeDelivery(getScreenText(event.source))
-                        }
+                        ScreenType.DECLINED_SCREEN -> delcineDelivery()
+                        ScreenType.DELIVERY_COMPLETE_SCREEN -> completeDelivery(text)
                         else -> return
                     }
                 }
@@ -110,8 +116,6 @@ class DeliveryService : AccessibilityService() {
                         1 -> event.source.getChild(0).text
                         else -> return
                     } ?: return
-
-//                    Logger.log(">>> TYPE_VIEW_CLICKED (buttonText) >>> $buttonText <<<")
 
                     when (buttonText.toString().toLowerCase(Locale.ROOT)) {
                         "dash now" -> {
@@ -166,12 +170,13 @@ class DeliveryService : AccessibilityService() {
                         }
                         "unassign this delivery" -> {
                             s.numUnassigned++
+                            delivery.isActive = false
                             delivery.isUnassigned = true
                             delivery.completedAt = LocalDateTime.now()
 
                             GlobalScope.launch { deliveryDao.update(delivery) }
 
-                            Logger.log(">>> UNASSIGNED")
+                            Logger.log(">>> UNASSIGNED  ")
                         }
                         "decline" -> {
                             if(isDebug) {
@@ -208,6 +213,7 @@ class DeliveryService : AccessibilityService() {
         delivery.toDeliverMins = getMinutes(delivery.departedStoreAt, delivery.completedAt)
         delivery.actualDuration = getMinutes(delivery.acceptedAt, delivery.completedAt)
         delivery.actualDeliveryIndex = 60.0 / delivery.actualDuration* delivery.actualPay
+        delivery.isActive = false
 
         GlobalScope.launch { deliveryDao.update(delivery) }
 
@@ -225,6 +231,7 @@ class DeliveryService : AccessibilityService() {
     @DelicateCoroutinesApi
     private fun delcineDelivery() {
         delivery.isDeclined = true
+        delivery.isActive = false
         delivery.completedAt = LocalDateTime.now()
         s.numDeclined++
 
@@ -247,6 +254,14 @@ class DeliveryService : AccessibilityService() {
                     else -> false
                 }
 
+                // todo: temp hack to ignore add on orders for now
+                if(::delivery.isInitialized) {
+                    if(delivery.isActive) {
+                        Logger.log(">>> ADD ON OFFER WAS MADE <<<")
+                        return
+                    }
+                }
+
                 // bring dash app to front
                 // todo: check to see if app is already focused
                 val packageManager = applicationContext.packageManager
@@ -254,7 +269,7 @@ class DeliveryService : AccessibilityService() {
                 launchIntent?.addCategory(Intent.CATEGORY_LAUNCHER)
                 applicationContext.startActivity(launchIntent)
 
-                Thread.sleep(1000)
+                Thread.sleep(1500)
 
                 delivery = com.tdc.subvectio.entities.Delivery(
                     storeName = intent.extras?.getString("storeName")!!,
@@ -262,6 +277,7 @@ class DeliveryService : AccessibilityService() {
                     customerAddress = intent.extras?.getString("customerAddress")!!,
                     offer = offerScreenText.firstOrNull { it.startsWith("$") }?.replace("$", "")?.toDouble()!!,
                     createdAt = LocalDateTime.now(),
+                    isActive = true,
                     isDebug = isDebug
                 )
 
@@ -287,8 +303,8 @@ class DeliveryService : AccessibilityService() {
             .addOnSuccessListener { location ->
                 if (location != null) {
                     val url = baseUrl +
-                        "&origins=${location.latitude},${location.longitude}|${merchAddr}" +
-                        "&destinations=${merchAddr}|${custAddr}${optionsUrl}"
+                            "&origins=${location.latitude},${location.longitude}|${merchAddr}" +
+                            "&destinations=${merchAddr}|${custAddr}${optionsUrl}"
 
                     val req = Request.Builder()
                         .url(url)
@@ -308,11 +324,26 @@ class DeliveryService : AccessibilityService() {
 
                             ContextCompat.getMainExecutor(baseContext).execute(Runnable {
                                 val color = when {
-                                    delivery.estDeliveryIndex <= 20 -> Color.parseColor("#FF0000")
-                                    delivery.estDeliveryIndex < 30 && delivery.estDeliveryIndex > 20 -> Color.parseColor("#FFFF00")
+                                    delivery.estDeliveryIndex < 20 -> Color.parseColor("#FF0000")
+                                    delivery.estDeliveryIndex < 30 && delivery.estDeliveryIndex >= 20 -> Color.parseColor("#FFFF00")
                                     delivery.estDeliveryIndex >= 30 -> Color.parseColor("#00FF00")
                                     else -> Color.parseColor("#FFFFFF")
                                 }
+
+                                // add geotags
+//                                <TextView
+//                                android:text="CAMPUS"
+//                                android:textStyle="bold"
+//                                android:layout_width="wrap_content"
+//                                android:layout_height="wrap_content"
+//                                android:padding="10dp"
+//                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+//                                android:textColor="@color/white" />
+
+//                                var tagview: TextView = TextView(baseContext)
+//                                tagview.text = "CAMPUS"
+//                                tagview.setTextColor(Color.parseColor("#000000"))
+
 
                                 tvStoreName?.text = delivery.storeName.toUpperCase(Locale.ROOT)
                                 tvOfferAmount?.text = "$%.2f".format(delivery.offer)
@@ -326,10 +357,10 @@ class DeliveryService : AccessibilityService() {
 
                             GlobalScope.launch { deliveryDao.update(delivery) }
 
-                            Logger.log("OFFER             >>> \$%.2f".format(delivery.offer))
-                            Logger.log("DURATION          >>> %.1f mins".format(delivery.estDuration))
-                            Logger.log("DISTANCE          >>> %.1f miles".format(delivery.distance))
-                            Logger.log("ESTIMATED INDEX   >>> %.1f".format(delivery.estDeliveryIndex))
+                            Logger.log("OFFER              >>> \$%.2f".format(delivery.offer))
+                            Logger.log("DURATION           >>> %.1f mins".format(delivery.estDuration))
+                            Logger.log("DISTANCE           >>> %.1f miles".format(delivery.distance))
+                            Logger.log("ESTIMATED INDEX    >>> %.1f".format(delivery.estDeliveryIndex))
 
                             s.numOffers++
                             response.close()
@@ -359,6 +390,38 @@ class DeliveryService : AccessibilityService() {
     private fun getMinutes(start: LocalDateTime?, end: LocalDateTime?): Double {
         val seconds = ChronoUnit.SECONDS.between(start, end)
         return if(seconds < 60) 1.0 else seconds / 60.0
+    }
+
+    private val declineReasons = listOf<String>(
+        "Distance is too far",
+        "Store is not in my starting point",
+        "The order is too small",
+        "I don't want to place order",
+        "I don't want to go to this store"
+    )
+
+    private fun declineOffer() {
+        Logger.log(">>> ONE-CLICK DECLINE")
+        clickButton("Decline")
+        Thread.sleep(500)
+        clickButton("Decline")
+        Thread.sleep(500)
+        clickButton(declineReasons[(0 until declineReasons.count()).random()])
+    }
+
+    private fun clickButton(text: String) {
+        try {
+            val nodes = rootInActiveWindow.findAccessibilityNodeInfosByText(text)
+            for (node in nodes) {
+                if (node.text == text) {
+                    Logger.log(">>> CLICKING --> $text")
+                    node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                    break
+                }
+            }
+        } catch (ex: Exception) {
+            Logger.log(ex.stackTraceToString(), true)
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -396,26 +459,44 @@ class DeliveryService : AccessibilityService() {
             }
         }
 
+        val btnDecline: Button = overlayDelivery!!.findViewById(R.id.button_decline)
+        btnDecline.setOnClickListener { declineOffer() }
+
         overlayDelivery?.visibility = View.GONE
         windowManager.addView(frame, params)
     }
 }
 
 enum class ScreenType {
+    DASH_HOME_SCREEN,
+    LOOKING_FOR_ORDERS_SCREEN,
     OFFER_SCREEN,
+    TO_STORE_SCREEN,
+    AT_STORE_SCREEN,
+    TO_CUSTOMER_SCREEN,
+    COMPLETE_DELIVERY_SCREENS,
+    ADD_ON_ORDER_SCREEN,
     DECLINED_SCREEN,
     ARE_YOU_SURE_DECLINE_SCREEN,
-    DELIVERY_COMPLETE,
+    DELIVERY_COMPLETE_SCREEN,
+    DASH_PAUSED_SCREEN,
     UNKNOWN
 }
 
 object Screen {
     fun type(text: MutableList<String>): ScreenType {
         return when {
+            text.contains("Dash") && text.contains("Promos") -> ScreenType.DASH_HOME_SCREEN
+            text.contains("Looking for Orders") -> ScreenType.LOOKING_FOR_ORDERS_SCREEN
             text.contains("Accept") && text.contains("Decline") -> ScreenType.OFFER_SCREEN
+            text.contains("Pickup from") && text.contains("Arrived at store") -> ScreenType.TO_STORE_SCREEN
+            text.contains("Order for") && text.contains("Confirm pickup") -> ScreenType.AT_STORE_SCREEN
+            text.contains("Delivery for") || text.contains("Deliver by") -> ScreenType.TO_CUSTOMER_SCREEN
+            text.contains("From Camera") || text.contains("Take a photo") || text.contains("Complete delivery") || text.contains("Confirm delivery was completed") -> ScreenType.COMPLETE_DELIVERY_SCREENS
+            text.contains("Delivery Complete!") -> ScreenType.DELIVERY_COMPLETE_SCREEN
             text.contains("Are you sure you want to decline this order?") -> ScreenType.ARE_YOU_SURE_DECLINE_SCREEN
             text.count() == 2 && text.contains("Please select a reason") && text.contains("Go back") -> ScreenType.DECLINED_SCREEN
-            text.contains("Delivery Complete!") -> ScreenType.DELIVERY_COMPLETE
+            text.contains("Dash Paused") -> ScreenType.DASH_PAUSED_SCREEN
             else -> return ScreenType.UNKNOWN
         }
     }
